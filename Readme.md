@@ -19,19 +19,19 @@ This file contains the code to load the local LLM, even though I later changes i
 ## Tools File : 
 This file contains the necessary tools required to be called and used by the model. We have used native tool calling. 
 The available tools are : 
-###        Search Engine Tool : 
+###      1.  Search Engine Tool : 
 Using DuckDuckGo to access information from internet and also obtain as much privacy as possible.  
 
-###        Knowledge Base Tool : 
+###      2.  Knowledge Base Tool : 
 Currently wikipedia is used as knowledge base, honestly there is very high chance that the model is already trained on this data. But this tool can be substituted with other data which could be retrieved and a potential integration of RAG application and minimum hallucination. 
 
-###        Coding Agent Tool : 
+###      3. Coding Agent Tool : 
 
 
 
 
-###        Result Log Tool : 
+###       4. Result Log Tool : 
 This will serve as a backup file for the whole conversation in case of accidental data deletion or other issues. This can also be used for feedback loops leading to potential improvements. 
 
 
-##         Other Tools : Will be Added
+##         5. Other Tools : Will be Added
