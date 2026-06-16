@@ -118,7 +118,7 @@ def To_do(task : str, Action : str, filepath = To_Do_vault_path):  # Connected w
         - filepath :  This is the path of the TO DO List vault file.
     """
     try : 
-        with open(filepath, "+a") as todo:
+        with open(filepath, "r+") as todo:
             content = todo.read()
             todo.seek(0)
             if Action == "Add" and task not in content: 
@@ -129,12 +129,14 @@ def To_do(task : str, Action : str, filepath = To_Do_vault_path):  # Connected w
                 todo.seek(0)
                 return f'The Task {task} is already in the TO DO list and no changes are made.'
             elif Action == "Remove" and task in content:
-                updated_content = content.replace(task, "")
+                task = "- [ ] " + task
+                updated_content = content.replace(task, "").replace("\n\n", "\n")
                 todo.seek(0)
                 todo.write(updated_content)
                 todo.truncate()
             else : 
-                return f'Invalid Action {Action} is passed.'
+                #return f'Invalid Action {Action} is passed.'
+                return f'Action is {Action} but task is not present in the to do list.'
         return f'The Task {task} is {Action}ed.'
     except Exception as e : 
         return f'{Action} Action failed due to {e}'
