@@ -81,7 +81,7 @@ vault_filepath = ""
 @tool
 def Notes_tool(filename : str, content : str, filepath = vault_filepath): # Connected with obsidian vault
     """
-    This tool is make notes out of a topic that is asked. You can use the search and knowledge base tool
+    This tool is to make notes out of a topic that is asked. You can use the search and knowledge base tool
     to collect content for the notes to me made. Check if a file with name given exists or else make one.
 
     Args : 
@@ -101,12 +101,39 @@ def Notes_tool(filename : str, content : str, filepath = vault_filepath): # Conn
     except Exception as e:
         return f'Notes have not been created due to {e}'
 
+
+To_Do_vault_path = ""
+
 @tool 
-def To_do():  # Connected with obsidian
+def To_do(task : str, Action : str, filepath = To_Do_vault_path):  # Connected with obsidian
+    """
+    This tool is to add or delete tasks to my To Do list in my obsisidan vault. The 
+
+    Args : 
+        - task : This is the name of the task to be added or removed from the To Do list. 
+        - Action : This is the action to be carried, this could be either add or remove according what the
+                    user needs to do. 
+                    - Add : Add the task to the To DO List
+                    - Remove : Remove the task from the TO DO List 
+        - filepath :  This is the path of the TO DO List vault file.
     """
     
-    """
-    return
+    try : 
+        with open(filepath, "+a") as todo:
+            if Action == "Add" and task not in todo.read(): 
+                todo.write(task)
+                todo.seek(0)
+            elif Action == "Add" and task in todo.read():
+                todo.seek(0)
+                return f'The Task {task} is already in the TO DO list and no changes are made.'
+            elif Action == "Remove" and task in todo.read():
+                todo.seek(0)
+                pass
+            else : 
+                return f'Invalid Action {Action} is passed.'
+        return f'The Task {task} is {Action}ed.'
+    except Exception as e : 
+        return f'{Action} Action failed due to {e}'
 
 @tool 
 def Notes_from_Documents():  # Connected with Obsidian
