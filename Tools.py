@@ -108,6 +108,13 @@ def To_do():  # Connected with obsidian
     """
     return
 
+@tool 
+def Notes_from_Documents():  # Connected with Obsidian
+    """
+    
+    """
+    return
+
 @tool
 def Messenger_tool():
     """
