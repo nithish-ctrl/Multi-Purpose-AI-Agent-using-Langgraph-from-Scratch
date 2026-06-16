@@ -76,7 +76,7 @@ def Calender_tool():  #
     return 
 
 
-vault_filepath = ""
+vault_filepath = r"d:\Note WorkFlow\Workflow"
 
 @tool
 def Notes_tool(filename : str, content : str, filepath = vault_filepath): # Connected with obsidian vault
@@ -93,7 +93,7 @@ def Notes_tool(filename : str, content : str, filepath = vault_filepath): # Conn
     """
 
     filename = filename if filename.endswith(".md") else filename + ".md"
-    path_with_name = filepath + filename
+    path_with_name = filepath + "/" + filename
     try : 
         with open(path_with_name, "+a") as notes_file:
             notes_file.write(content)
@@ -102,7 +102,7 @@ def Notes_tool(filename : str, content : str, filepath = vault_filepath): # Conn
         return f'Notes have not been created due to {e}'
 
 
-To_Do_vault_path = ""
+To_Do_vault_path = r"D:\Note WorkFlow\Workflow\Work List.md"
 
 @tool 
 def To_do(task : str, Action : str, filepath = To_Do_vault_path):  # Connected with obsidian
@@ -117,18 +117,22 @@ def To_do(task : str, Action : str, filepath = To_Do_vault_path):  # Connected w
                     - Remove : Remove the task from the TO DO List 
         - filepath :  This is the path of the TO DO List vault file.
     """
-    
     try : 
         with open(filepath, "+a") as todo:
-            if Action == "Add" and task not in todo.read(): 
-                todo.write(task)
+            content = todo.read()
+            todo.seek(0)
+            if Action == "Add" and task not in content: 
+                task = "\n" + "- [ ] " + task 
+                todo.writelines(task)
                 todo.seek(0)
-            elif Action == "Add" and task in todo.read():
+            elif Action == "Add" and task in content:
                 todo.seek(0)
                 return f'The Task {task} is already in the TO DO list and no changes are made.'
-            elif Action == "Remove" and task in todo.read():
+            elif Action == "Remove" and task in content:
+                updated_content = content.replace(task, "")
                 todo.seek(0)
-                pass
+                todo.write(updated_content)
+                todo.truncate()
             else : 
                 return f'Invalid Action {Action} is passed.'
         return f'The Task {task} is {Action}ed.'
