@@ -2,7 +2,7 @@ from typing import TypedDict, Sequence, Annotated
 from langchain_core.messages import BaseMessage, HumanMessage, SystemMessage, AIMessage
 from langgraph.graph import StateGraph, START, END, add_messages
 from langgraph.prebuilt import ToolNode
-from Tools import Search_engine, wiki_knowledge_base, results_log, To_do, Notes_tool
+from Tools import Search_engine, wiki_knowledge_base, results_log, To_do, Notes_tool, Notes_from_Documents
 from dotenv import load_dotenv
 # from langchain_google_genai import ChatGoogleGenerativeAI 
 from Prompt_template import System_prompt
@@ -12,7 +12,7 @@ from langchain_mistralai import ChatMistralAI
 load_dotenv()
 
 llm = ChatMistralAI(model_name="mistral-medium-3-5")
-Tools = [Search_engine, wiki_knowledge_base, results_log, To_do, Notes_tool]
+Tools = [Search_engine, wiki_knowledge_base, results_log, To_do, Notes_tool, Notes_from_Documents]
 llm = llm.bind_tools(tools=Tools)
 
 class AgentState(TypedDict):
@@ -88,7 +88,7 @@ def run_agent():
         elif "ToolNode" in output:
             tool_message = output["ToolNode"]["messages"][0]
             print(f"\n[Tools]: Found search results. Sending data back to LLM...")
-    print("___________________________________________________________________________________________________")
+    print("___________________________________________________________________________________________________________________")
 
 if __name__ == "__main__":
     run_agent()
