@@ -172,7 +172,91 @@ def Notes_from_Documents(notes_filename : str, document_name : str, vault_path =
         return f'The content is extracted and {notes_filename} is created with notes in the vault folder.'
     except Exception as e : 
         return f'The content extraction from the document failed due to {e}.'
+
+
+resume_JD_vaultpath = "D:/Note WorkFlow/Workflow/Resume-JD-Vault"
+resume_JD_dir = "D:/Inputs for Agent"
+@tool
+def Resume_Analyzer(Resume_name : str, Job_desc_name : str, vault_filename : str, Resume_and_JD_path = resume_JD_dir , vault_path = resume_JD_vaultpath):
+    """
+    This tool is to compare the resume and job decription documents and give suggestions about them and 
+    improvements to the user about what they should focus on to prepare for the job specified in the job
+    description. The result will be the similarity score, vault_filename, vaultpath which you will pass to the notes file to update everything to the vault.
+    Make sure to add it with labels, 
+    Summary of the resume "Resume summary", Summary of the JD as "JD Summary" and then Similarity score.
+    Args : 
+    - Resume_name : This is the name of the resume file from which the text will be extracted from, this is passed by the user exactly.
+                    No need to ask the user for confirmation, can use it directly.
+
+    - Job_desc_name : This is the name of the Job desciption file from which the text will be extracted from, this is passed by the user exactly.
+                      No need to ask the user for confirmation, can use it directly.
+
+    - Resume_and_JD_path : This is the dirctory of both the Resume and Job description.
+
+    - vault_filename : This is the filename for the notes content to be saved, use the filename given by user for this
+                        or else choose the best keyword as the filename.
+
+    - vault_path : This is the filepath of the vault on which the extracted text, and similarity score is to be updated.
+    """
+
+    import fitz
+    from thefuzz import fuzz
+    from sentence_transformers import SentenceTransformer, util
+
+    if not vault_filename.endswith(".md") : vault_filename += ".md"
+
+    resume_path = os.path.join(Resume_and_JD_path, Resume_name)
+    JD_path = os.path.join(Resume_and_JD_path, Job_desc_name)
+    notes_path = os.path.join(vault_path, vault_filename)
+
+    resume_doc = fitz.open(resume_path)
+    JD_doc = fitz.open(JD_path)
+
+    resume_text = "\n".join([str(page.get_text()) for page in resume_doc])
+    JD_text = "\n".join([str(page.get_text()) for page in JD_doc])
+    fuzz_similarity = fuzz.ratio(resume_text, JD_text)
+
+    model = SentenceTransformer('all-MiniLM-L6-v2')
+    resume_encoding = model.encode(resume_text, convert_to_tensor=True)
+    JD_encoding = model.encode(JD_text, convert_to_tensor=True)
     
+    semantic_similarity = util.cos_sim(resume_encoding, JD_encoding)
+
+    similarity_score = 0.1 * fuzz_similarity + 0.9 * semantic_similarity
+    print(f'Similarity Score : {similarity_score}')
+
+    return similarity_score, vault_filename, vault_path, f'The similarity score is {similarity_score}'
+
+@tool
+def Drafter():
+    """
+    This tool is used to draft content. 
+
+    Args : 
+        - 
+        - 
+        - 
+        - 
+    """
+    return
+
+def Jarvis_mode():
+    """
+
+
+    Args : 
+        - 
+        - 
+        - 
+    """
+    return 
+
+def tranformers_mode() : # Either with Jarvis or separately.
+    """
+    
+    """
+    return 
+
 
 @tool
 def Messenger_tool():
@@ -186,20 +270,9 @@ def Channels_tool():
     """
     allows users to create groups called channels to discuss specific subjects. This 
     helps users communicate with their teammates and share important files.
+    Or Bulk emailing can be done too.
     """
     return 
-
-@tool
-def Resume_Analyzer():
-    """
-    """
-    return
-
-def Drafter():
-    """
-    This tool is used to make drafts of content. This could be email 
-    """
-    return
 
 @tool 
 def Coding_tool():
