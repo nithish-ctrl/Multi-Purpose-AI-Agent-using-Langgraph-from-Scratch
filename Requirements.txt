@@ -7,4 +7,4 @@ wikipedia
 mistral_ai
 pymupdf
 thefuzz
-spacy   # also download en_core_web_sm
+sentence-transformers
