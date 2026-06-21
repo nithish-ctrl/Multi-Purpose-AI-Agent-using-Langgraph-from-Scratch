@@ -47,6 +47,7 @@ This tool can open a pdf document and extract the text from it and paste the tex
 
 ###        9. Resume Analyzer Tool : 
 This tool takes the resume file and Job description file does a basic keyword + Semantic similarity search and gives a similarity score, trying it also give suggestions about what to improve. 
+Currently it reads from a particular directory, change it to yours if you are cloning the rep.
 
 ###        10. Talk back Mode : 
 This tool can make the LLM talk with the user instead of taking ang giving response through the terminal as text. Bascially like Alexa, 
