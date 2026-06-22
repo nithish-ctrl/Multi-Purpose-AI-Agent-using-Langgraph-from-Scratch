@@ -4,7 +4,7 @@ This repository contains concept and code for building AI Agents using langgraph
 
 ## Project Mongrel
 The name is inspired from Project Nomad, its more like my version of project Nomad. This is designed to be run locally but due to hardware limitations, I'm using mistral medium 3.5 with good with native tool calling. The code to implement the local LLM for the same has been commented in the main.py file.
-This is not just a add on but a complete workflow with 11 total tools. All the tools are explained properly. Talk_back mode is my most favourite tool right here, it basically lets us communicate with the LLM through speech instead of text and can talk to the model like JARVIS. We can implement a lot of automation here, the number of tools that can be added here is endless.
+This is not just a add on but a complete workflow with 11 total tools. All the tools are explained properly. Talk_back mode is my most favourite tool right here, it basically lets us communicate with the LLM through speech instead of text and we can talk to the model and recieve response as audio like JARVIS. We can implement a lot of automation here, the number of tools that can be added here is endless.
 
 
 ## Table of contents : 
