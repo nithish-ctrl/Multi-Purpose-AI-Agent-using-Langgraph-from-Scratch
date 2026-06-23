@@ -69,7 +69,7 @@ def results_log(logs : str, filename = "Conversation_logs.md"):
         return f'Conversation logs were not updated due {e}'
 
 @tool
-def Clock_tool(use : str, duration : str, purpose : str):  #  
+def Clock_tool(use : str, duration : int, purpose : str, break_time = 0, iterations=1):  #  
     """
     This tool can set up a timer, reminder or a pomodoro time in case of productive mode according
     to the user needs.
@@ -81,15 +81,54 @@ def Clock_tool(use : str, duration : str, purpose : str):  #
             - Pomodoro-Timer : 
         
         - duration : This is the duration in case of the timer and pomodoro timer and is the
-                     time to set the reminder in case of reminder.
+                     time to set the reminder in case of reminder. The duration must be entered in minutes.
 
         - purpose : This could be a purpose of reminder, the purpose of time or the purpose for pomodoro-timer.
 
+        - break_time : This will be the break time in between the pomodoro sessions. It is 0 if there is no information
+                        regarding the break duration.
+       
+        - iterations : The number of pomodoro sessions required by the user, It is 1 if there is no 
+                       information regarding that.
+
     """
-    return 
+    from threading import Timer
+
+    duration_in_seconds = duration * 60 
+
+    if use == "Timer" :  
+        def timer_function():
+            return f"The timer is done for {purpose}"
+        timer = Timer(duration_in_seconds, timer_function)
+        print(f'Your timer for the purpose {purpose} has started.')
+        timer.start()
+    
+    elif use == "Pomodoro-Timer" : 
+        def Productive_end(last_session : str):
+            if last_session == "Productive":
+                return f'The Produtive session for {duration} minutes has ended, Take a break for {break_time}'
+            if last_session == "Break" : 
+                return f'Break session for {break_time} mins has ended, back to productive sessions.'
+            
+        session_count = 1
+        pomodoro_timer = Timer(duration_in_seconds, Productive_end, args=("Productive",))
+        break_timer = Timer(break_time, Productive_end, args=("Break",))
+        print(f"Pomodoro session is started for {iterations} iterations for {duration} each with a break of {break_time} time.")
+        print(f'STARTED !!')
+        while session_count <= iterations : 
+            if session_count == iterations : 
+                pomodoro_timer.start()
+                print("Pomodoro Iterations ends, Congrats !!, have a nice time.")
+            else : 
+                pomodoro_timer.start()
+                break_timer.start()
+            session_count+=1
+
+    elif use == "Reminder" : 
+        pass
 
 
-vault_filepath = r"D:/Inputs for Agent"
+vault_filepath = r"D:\Note WorkFlow\Workflow\Notes from the Agent"
 
 @tool
 def Notes_tool(filename : str, content : str, filepath = vault_filepath): # Connected with obsidian vault
