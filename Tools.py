@@ -93,8 +93,10 @@ def Clock_tool(use : str, duration : int, purpose : str, break_time = 0, iterati
 
     """
     from threading import Timer
+    import time 
 
     duration_in_seconds = duration * 60 
+    break_time_in_seconds = break_time * 60
 
     if use == "Timer" :  
         def timer_function():
@@ -112,7 +114,7 @@ def Clock_tool(use : str, duration : int, purpose : str, break_time = 0, iterati
             
         session_count = 1
         pomodoro_timer = Timer(duration_in_seconds, Productive_end, args=("Productive",))
-        break_timer = Timer(break_time, Productive_end, args=("Break",))
+        break_timer = Timer(break_time_in_seconds, Productive_end, args=("Break",))
         print(f"Pomodoro session is started for {iterations} iterations for {duration} each with a break of {break_time} time.")
         print(f'STARTED !!')
         while session_count <= iterations : 
@@ -121,7 +123,8 @@ def Clock_tool(use : str, duration : int, purpose : str, break_time = 0, iterati
                 print("Pomodoro Iterations ends, Congrats !!, have a nice time.")
             else : 
                 pomodoro_timer.start()
-                break_timer.start()
+                #break_timer.start()
+                #time.sleep(break_time_in_seconds)
             session_count+=1
 
     elif use == "Reminder" : 
