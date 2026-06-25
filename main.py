@@ -4,7 +4,7 @@ from langchain_core.messages import trim_messages
 from langgraph.graph import StateGraph, START, END, add_messages, MessagesState
 from langgraph.prebuilt import ToolNode
 from langgraph.checkpoint.memory import MemorySaver 
-from Tools import Search_engine, wiki_knowledge_base, results_log, To_do, Notes_tool, Notes_from_Documents, Resume_Analyzer, Clock_tool
+from Tools import Search_engine, wiki_knowledge_base, results_log, To_do, Notes_tool, Notes_from_Documents, Resume_Analyzer, Clock_tool, MakeYourOwn_tool
 from dotenv import load_dotenv
 # from langchain_google_genai import ChatGoogleGenerativeAI 
 from Prompt_template import System_prompt
@@ -14,7 +14,7 @@ from langchain_mistralai import ChatMistralAI
 load_dotenv()
 
 llm = ChatMistralAI(model_name="mistral-medium-3-5")
-Tools = [Search_engine, wiki_knowledge_base, results_log, To_do, Notes_tool, Notes_from_Documents, Resume_Analyzer, Clock_tool]
+Tools = [Search_engine, wiki_knowledge_base, results_log, To_do, Notes_tool, Notes_from_Documents, Resume_Analyzer, Clock_tool, MakeYourOwn_tool]
 llm = llm.bind_tools(tools=Tools)
 
 checkpointer = MemorySaver()
