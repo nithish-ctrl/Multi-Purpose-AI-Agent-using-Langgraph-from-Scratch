@@ -395,6 +395,7 @@ def MakeYourOwn_tool(docstring : str, name : str, code : str, tool_filepath = to
 
         toolfile.writelines("\n@tool\n")
         toolfile.writelines(code)
+        toolfile.writelines("\n")
     return print(f'The tool is coded into the itended python file with the name {name}.')
 
 
