@@ -364,12 +364,38 @@ def Channels_tool():
     """
     return 
 
+
+tool_filepath = r"C:/Users/Nithish/Agents From Scratch Using Langgraph/Search Engine Agent/tool_check.py"
+
 @tool 
-def Coding_tool():
+def MakeYourOwn_tool(docstring : str, name : str, code : str, tool_filepath = tool_filepath):
     """
+    The User can create a custom tool using this tool.
+
+    Args : 
+        - docstring : This has the description about the tool to be made so it can be called by the LLM.
+                      This is the doc string description and all the arguments should be clearly explained
+                      in this.
+        - name : This is the name of the tool to be created, it should be one or two words at max separated by _,
+                 the name itself should reflect the tool's working.
+        - code : This is the code to be written inside the tool for it to do the itended working.
+                 This should be in the form of a function definition with even imports present inside the 
+                 function. 
+        - tool_filepath : This is the filepath where the tool code is to be added to.
     
     """
-    return 
+    #tool_filepath_with_name = os.path.join(tool_filepath, name)
+    name = name + "_tool"
+    #tool_template = 
+    f"""
+    @tool
+    def {name}()
+    """
+    with open(tool_filepath, "+a") as toolfile : 
+
+        toolfile.writelines("\n@tool\n")
+        toolfile.writelines(code)
+    return print(f'The tool is coded into the itended python file with the name {name}.')
 
 
 
