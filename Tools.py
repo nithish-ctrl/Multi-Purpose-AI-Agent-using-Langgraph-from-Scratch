@@ -304,19 +304,6 @@ def Productivity_mode(work : str, duration : str, iteration : int, break_duratio
     return
 
 
-@tool
-def Drafter():
-    """
-    This tool is used to draft content. 
-
-    Args : 
-        - 
-        - 
-        - 
-        - 
-    """
-    return
-
 def Talkback_mode(response : str, Goat : str, ):
     """
     This tool is basically to turn on Speech mode so the conversation with the LLM can take place using Speech. There are few voices the LLM model can
@@ -355,15 +342,6 @@ def Messenger_tool(message : str, platform : str, receiver_details : str):
     """
     return 
 
-@tool
-def Channels_tool():
-    """
-    allows users to create groups called channels to discuss specific subjects. This 
-    helps users communicate with their teammates and share important files.
-    Or Bulk emailing can be done too.
-    """
-    return 
-
 
 tool_filepath = r"C:/Users/Nithish/Agents From Scratch Using Langgraph/Search Engine Agent/Tools.py"
 
@@ -392,5 +370,32 @@ def MakeYourOwn_tool(docstring : str, name : str, code : str, tool_filepath = to
         toolfile.writelines(code)
         toolfile.writelines("\n")
     return print(f'The tool is coded into the itended python file with the name {name}.')
+
+
+@tool
+def Drafter():
+    """
+    This tool is used to draft content. 
+
+    Args : 
+        - 
+        - 
+        - 
+        - 
+    """
+    return
+
+
+@tool
+def Channels_tool():
+    """
+    Allows users to create groups called channels to discuss specific subjects. This 
+    helps users communicate with their teammates and share important files.
+    Or Bulk emailing can be done too.
+    """
+    return 
+
+Tools = [Search_engine, wiki_knowledge_base, results_log, To_do, Notes_tool, Notes_from_Documents, Resume_Analyzer, Clock_tool, MakeYourOwn_tool]
+
 
 
