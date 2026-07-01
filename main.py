@@ -9,6 +9,7 @@ from dotenv import load_dotenv
 # from langchain_google_genai import ChatGoogleGenerativeAI 
 from Prompt_template import System_prompt
 from langchain_mistralai import ChatMistralAI
+from pprint import pprint
 
 
 load_dotenv()
@@ -89,20 +90,21 @@ def run_agent():
         inputs = {"messages": [("user", user_input)]}
 
         for output in agent.stream(inputs,config=config, stream_mode="updates"):  # type: ignore
+            pprint(output)
             
             if "AgentCall" in output:
                 message = output["AgentCall"]["messages"][0]
                 
                 if message.tool_calls:
                     for tool_call in message.tool_calls:
-                        print(f"\n[LLM]: Searching Tools for: \"{tool_call['args'].get('query')}\"")
+                        print(f"\n[LLM]: Searching Tools for: \"{tool_call['args']}\"")
                 
                 elif message.content:
                     #print(f"\n[LLM]: {message.content[0]['text']}") This is extract the text from Google Gemini Model
                     print(f'LLM : {message.content}')
             
             elif "ToolNode" in output:
-                tool_message = output["ToolNode"]["messages"][0]
+                tool_message = output["ToolNode"]["messages"]
                 print(f"\n[Tools]: Pretty much done, Sending data back to LLM...")
         
         print("___________________________________________________________________________________________________________________")
