@@ -78,7 +78,7 @@ def Clock_tool(use : str, duration : int, purpose : str, break_time = 0, iterati
         - use :
             - Timer : 
             - Reminder
-            - Pomodoro-Timer : 
+             
         
         - duration : This is the duration in case of the timer and pomodoro timer and is the
                      time to set the reminder in case of reminder. The duration must be entered in minutes.
@@ -104,28 +104,6 @@ def Clock_tool(use : str, duration : int, purpose : str, break_time = 0, iterati
         timer = Timer(duration_in_seconds, timer_function)
         print(f'Your timer for the purpose {purpose} has started.')
         timer.start()
-    
-    elif use == "Pomodoro-Timer" : 
-        def Productive_end(last_session : str):
-            if last_session == "Productive":
-                return f'The Produtive session for {duration} minutes has ended, Take a break for {break_time}'
-            if last_session == "Break" : 
-                return f'Break session for {break_time} mins has ended, back to productive sessions.'
-            
-        session_count = 1
-        pomodoro_timer = Timer(duration_in_seconds, Productive_end, args=("Productive",))
-        break_timer = Timer(break_time_in_seconds, Productive_end, args=("Break",))
-        print(f"Pomodoro session is started for {iterations} iterations for {duration} each with a break of {break_time} time.")
-        print(f'STARTED !!')
-        while session_count <= iterations : 
-            if session_count == iterations : 
-                pomodoro_timer.start()
-                print("Pomodoro Iterations ends, Congrats !!, have a nice time.")
-            else : 
-                pomodoro_timer.start()
-                #break_timer.start()
-                #time.sleep(break_time_in_seconds)
-            session_count+=1
 
     elif use == "Reminder" : 
         pass
@@ -396,4 +374,6 @@ def Channels_tool():
     """
     return 
 
-Tools = [Search_engine, wiki_knowledge_base, results_log, To_do, Notes_tool, Notes_from_Documents, Resume_Analyzer, Clock_tool, MakeYourOwn_tool]
+
+from Pomodoro_tool import start_pomodoro_timer, get_pomodoro_status, pause_pomodoro_timer, resume_pomodoro_timer, stop_pomodoro_timer
+Tools = [Search_engine, wiki_knowledge_base, results_log, To_do, Notes_tool, Notes_from_Documents, Resume_Analyzer, Clock_tool, MakeYourOwn_tool, start_pomodoro_timer, get_pomodoro_status, pause_pomodoro_timer, resume_pomodoro_timer, stop_pomodoro_timer]
